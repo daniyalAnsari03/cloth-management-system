@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model FabricType {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  description String?
+  production  Production[]
+  sales       Sale[]
+}
+
+model Shop {
+  id            Int           @id @default(autoincrement())
+  name          String        @unique
+  phone         String?
+  address       String?
+  createdAt     DateTime      @default(now())
+  sales         Sale[]
+  payments      Payment[]
+  ledgerEntries LedgerEntry[]
+}
+
+model Production {
+  id          Int         @id @default(autoincrement())
+  date        DateTime
+  fabricTypeId Int
+  fabricType  FabricType  @relation(fields: [fabricTypeId], references: [id])
+  gaz         Float
+  costPerGaz  Float
+  notes       String?
+}
+
+model Sale {
+  id              Int         @id @default(autoincrement())
+  date            DateTime
+  shopId          Int
+  shop            Shop        @relation(fields: [shopId], references: [id])
+  fabricTypeId    Int
+  fabricType      FabricType  @relation(fields: [fabricTypeId], references: [id])
+  gaz             Float
+  salePricePerGaz Float
+  costPerGaz      Float
+  notes           String?
+}
+
+model Payment {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  shopId   Int
+  shop     Shop     @relation(fields: [shopId], references: [id])
+  amount   Float
+  mode     String
+  reference String?
+  notes    String?
+}
+
+model LedgerEntry {
+  id            Int      @id @default(autoincrement())
+  date          DateTime
+  shopId        Int
+  shop          Shop     @relation(fields: [shopId], references: [id])
+  type          String
+  amount        Float
+  balanceAfter  Float
+  referenceType String?
+  referenceId   Int?
+  description   String?
+}
+
+model Expense {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  category    String
+  amount      Float
+  description String?
+}
