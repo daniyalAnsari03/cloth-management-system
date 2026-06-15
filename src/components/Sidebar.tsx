@@ -16,6 +16,7 @@ import {
   Menu,
   X as XIcon,
 } from "lucide-react";
+import { MasterReset } from "./MasterReset";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -120,10 +121,14 @@ export function Sidebar() {
           })}
         </nav>
 
+        <div className="border-t border-white/5 px-2 py-2 sm:px-3 sm:py-2">
+          <MasterReset />
+        </div>
+
         <div className="border-t border-white/5 px-4 py-3 sm:px-6 sm:py-4">
           <div className="gold-divider mb-3" />
-          <p className="text-[10px] font-medium tracking-wider uppercase text-white/15 sm:text-[11px]">
-            v1.0 · Internal
+          <p className="text-[10px] font-medium tracking-wider text-white/15 sm:text-[11px]">
+            DH DaniYaal Developer
           </p>
         </div>
       </aside>
